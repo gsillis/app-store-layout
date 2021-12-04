@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  AppStoreLayout
+//  appStoreLayout
 //
 //  Created by Gabriela Sillis on 03/12/21.
 //
