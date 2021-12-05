@@ -17,15 +17,15 @@ class ViewController: UIViewController {
 
 class TestView: UITableViewCell {
 
-    lazy var view: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        return view
+    lazy var sampleView: UIView = {
+        let sampleView = UIView()
+        sampleView.backgroundColor = .red
+        return sampleView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        view.addSubview(view)
+        addSubview(sampleView)
     }
     
     required init?(coder: NSCoder) {

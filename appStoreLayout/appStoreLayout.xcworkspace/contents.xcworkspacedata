@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../../frameworks/ViewCodePreview/ViewCodePreview.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "container:appStoreLayout.xcodeproj">
    </FileRef>
 </Workspace>
