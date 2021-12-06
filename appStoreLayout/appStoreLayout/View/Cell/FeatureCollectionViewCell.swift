@@ -8,8 +8,9 @@
 import UIKit
 import ViewCodePreview
 
-class FeatureCollectionViewCell: UICollectionViewCell {
+class FeatureCollectionViewCell: UICollectionViewCell, ConfigureCell {
 
+    // MARK:- UI Properties
     private let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .quaternaryLabel
@@ -18,7 +19,6 @@ class FeatureCollectionViewCell: UICollectionViewCell {
 
     private let taglineLabel: UILabel = {
         let label = UILabel()
-        label.text = "Lorem ipsum"
         label.textColor = .systemBlue
         label.font = .systemFont(ofSize: 12, weight: .bold)
         return label
@@ -26,7 +26,6 @@ class FeatureCollectionViewCell: UICollectionViewCell {
 
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Lorem ipsum"
         label.textColor = .label
         label.font = .preferredFont(forTextStyle: .title2)
         return label
@@ -34,7 +33,6 @@ class FeatureCollectionViewCell: UICollectionViewCell {
 
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Lorem ipsum"
         label.textColor = .secondaryLabel
         label.font = .preferredFont(forTextStyle: .title2)
         return label
@@ -42,7 +40,9 @@ class FeatureCollectionViewCell: UICollectionViewCell {
 
     private let imageView: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .systemBlue
+        image.backgroundColor = .random()
+        image.layer.cornerRadius = 5
+        image.clipsToBounds = true
         return image
     }()
 
@@ -52,6 +52,7 @@ class FeatureCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
 
+    // MARK:- Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -60,8 +61,16 @@ class FeatureCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK:- ConfigureCell Protocol
+    func configure(with model: App) {
+        taglineLabel.text = model.tagline
+        nameLabel.text = model.name
+        subtitleLabel.text = model.tagline
+    }
 }
 
+// MARK:- extension - ViewCode
 extension FeatureCollectionViewCell: ViewCode {
     func buildViewHierarchy() {
         addSubview(stackView)
@@ -70,11 +79,12 @@ extension FeatureCollectionViewCell: ViewCode {
     func addConstraints() {
         separatorView.constrainHeight(1)
         stackView.fillSuperview()
+        stackView.setCustomSpacing(10, after: separatorView)
+        stackView.setCustomSpacing(10, after: subtitleLabel)
     }
 }
 
-
-
+// MARK:- Preview
 #if canImport(SwiftUI) && DEBUG
 
 import SwiftUI
@@ -83,6 +93,8 @@ import SwiftUI
     static var previews: some View {
         Preview {
             let view = FeatureCollectionViewCell()
+            let app = App(tagline: "Lorem ipsum", name: "Lorem ipsum", subheading: "Lorem ipsum")
+            view.configure(with: app)
             return view
         }
         .previewLayout(.fixed(width: UIScreen.main.bounds.width, height:   300))
