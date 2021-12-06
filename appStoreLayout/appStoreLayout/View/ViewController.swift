@@ -9,16 +9,16 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    // MARK:- typealias
+    // MARK: typealias
     typealias UserDataSource = UICollectionViewDiffableDataSource<Section, App>
     typealias SnapshotData = NSDiffableDataSourceSnapshot<Section, App>
 
-    // MARK:- Properties
+    // MARK: Properties
     private let section = [Section].parse(jsonFile: "sampleData")
     private lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
     private lazy var dataSource: UserDataSource = createDataSource()
 
-    // MARK:- LifeCycle
+    // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -26,12 +26,12 @@ class ViewController: UIViewController {
         reloadSnapshotData()
     }
 
-    // MARK:- Register Cell
+    // MARK: Register Cell
     private func registerCell() {
         collectionView.register(FeatureCollectionViewCell.self, forCellWithReuseIdentifier: FeatureCollectionViewCell.identifier)
     }
 
-    // MARK:- DiffableDataSourceSnapshot
+    // MARK: DiffableDataSourceSnapshot
     private func reloadSnapshotData() {
         var snapshot = SnapshotData()
         snapshot.appendSections(section)
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         dataSource.apply(snapshot)
     }
 
-    // MARK:- CollectionView Data Source
+    // MARK: CollectionView Data Source
     private func createDataSource() -> UserDataSource {
         UserDataSource(collectionView: collectionView) { collectionView, indexPath, app in
             switch self.section[indexPath.section].type {
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         }
     }
 
-    // MARK:- CollectionView Compositional Layout
+    // MARK: CollectionView Compositional Layout
     private func createCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
             let section = self.section[sectionIndex]
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     }
 }
 
-// MARK:- extension - ViewCode
+// MARK: extension - ViewCode
 extension ViewController: ViewCode {
     func buildViewHierarchy() {
         view.addSubview(collectionView)
