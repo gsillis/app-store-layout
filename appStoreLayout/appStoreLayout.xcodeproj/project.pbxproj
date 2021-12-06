@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE94FFC1275E7A8E002181C8 /* FeatureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE94FFC0275E7A8E002181C8 /* FeatureCollectionViewCell.swift */; };
 		DEAD031B275BCC0400CB6C0C /* ViewCodePreview.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEAD0318275BCB2C00CB6C0C /* ViewCodePreview.framework */; platformFilter = ios; };
 		DEAD031C275BCC0400CB6C0C /* ViewCodePreview.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DEAD0318275BCB2C00CB6C0C /* ViewCodePreview.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DEAD0329275D7C0C00CB6C0C /* Decodable+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAD0324275D7C0B00CB6C0C /* Decodable+Parse.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DE94FFC0275E7A8E002181C8 /* FeatureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCollectionViewCell.swift; sourceTree = "<group>"; };
 		DEAD0310275BCA5A00CB6C0C /* ViewCodePreview.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewCodePreview.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEAD0313275BCB2C00CB6C0C /* ViewCodePreview.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ViewCodePreview.xcodeproj; path = ../../../frameworks/ViewCodePreview/ViewCodePreview.xcodeproj; sourceTree = "<group>"; };
 		DEAD0324275D7C0B00CB6C0C /* Decodable+Parse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Decodable+Parse.swift"; path = "../../../../../../Downloads/AppStore-Start/AppStore-Example/Utils/Decodable+Parse.swift"; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		DEAD0321275D7BBC00CB6C0C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				DE94FFC0275E7A8E002181C8 /* FeatureCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				DED47B92275AA31700F299CB /* AppDelegate.swift in Sources */,
 				DED47B94275AA31700F299CB /* SceneDelegate.swift in Sources */,
 				DEAD032C275D7C0C00CB6C0C /* ConfigureCell.swift in Sources */,
+				DE94FFC1275E7A8E002181C8 /* FeatureCollectionViewCell.swift in Sources */,
 				DEAD032B275D7C0C00CB6C0C /* ViewCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
