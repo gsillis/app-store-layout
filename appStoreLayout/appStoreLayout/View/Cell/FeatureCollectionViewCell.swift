@@ -10,7 +10,7 @@ import ViewCodePreview
 
 class FeatureCollectionViewCell: UICollectionViewCell, ConfigureCell {
 
-    // MARK:- UI Properties
+    // MARK: UI Properties
     private let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .quaternaryLabel
@@ -52,7 +52,7 @@ class FeatureCollectionViewCell: UICollectionViewCell, ConfigureCell {
         return stackView
     }()
 
-    // MARK:- Init
+    // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -62,7 +62,7 @@ class FeatureCollectionViewCell: UICollectionViewCell, ConfigureCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK:- ConfigureCell Protocol
+    // MARK: ConfigureCell Protocol
     func configure(with model: App) {
         taglineLabel.text = model.tagline
         nameLabel.text = model.name
@@ -70,7 +70,7 @@ class FeatureCollectionViewCell: UICollectionViewCell, ConfigureCell {
     }
 }
 
-// MARK:- extension - ViewCode
+// MARK: extension - ViewCode
 extension FeatureCollectionViewCell: ViewCode {
     func buildViewHierarchy() {
         addSubview(stackView)
@@ -84,7 +84,7 @@ extension FeatureCollectionViewCell: ViewCode {
     }
 }
 
-// MARK:- Preview
+// MARK: Preview
 #if canImport(SwiftUI) && DEBUG
 
 import SwiftUI
