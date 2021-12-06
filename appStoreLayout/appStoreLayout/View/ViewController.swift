@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-//    private let section = [Section].parse(jsonFile: "sampleData")
+    private let section = [Section].parse(jsonFile: "sampleData")
 
     private lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
 
@@ -60,21 +60,3 @@ extension ViewController: ViewCode {
         collectionView.fillSuperview()
     }
 }
-
-//#if canImport(SwiftUI) && DEBUG
-//
-//import SwiftUI
-//
-// struct ViewPreview: PreviewProvider {
-//    static var previews: some View {
-//        Preview {
-//            let view = TestView()
-//            return view
-//        }
-//        .previewLayout(.fixed(width: UIScreen.main.bounds.width, height:   300))
-//    }
-//}
-//
-//#endif
-
-
