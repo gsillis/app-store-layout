@@ -22,14 +22,14 @@ class SectionHeader: UICollectionViewCell  {
         return view
     }()
 
-    fileprivate let taglineLabel: UILabel = {
+     let taglineLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.font = .preferredFont(forTextStyle: .title1)
         return label
     }()
 
-    fileprivate let subTitleLabel: UILabel = {
+     let subTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
         label.font = .preferredFont(forTextStyle: .title2)
