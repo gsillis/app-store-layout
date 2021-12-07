@@ -29,7 +29,9 @@ class ViewController: UIViewController {
     // MARK: Register Cell
     private func registerCell() {
         collectionView.register(FeatureCollectionViewCell.self, forCellWithReuseIdentifier: FeatureCollectionViewCell.identifier)
-    }
+        collectionView.register(ListTableCell.self, forCellWithReuseIdentifier: ListTableCell.identifier)
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
+        }
 
     // MARK: DiffableDataSourceSnapshot
     private func reloadSnapshotData() {
@@ -47,6 +49,8 @@ class ViewController: UIViewController {
     private func createDataSource() -> UserDataSource {
         UserDataSource(collectionView: collectionView) { collectionView, indexPath, app in
             switch self.section[indexPath.section].type {
+                case "listTable":
+                    return collectionView.configure(ListTableCell.self, with: app, for: indexPath)
                 default:
                     return collectionView.configure(FeatureCollectionViewCell.self, with: app, for: indexPath)
             }
@@ -59,6 +63,8 @@ class ViewController: UIViewController {
             let section = self.section[sectionIndex]
 
             switch section.type {
+                case "listTable":
+                    return self.createListSection()
                 default:
                     return self.createFeatureSection()
             }
@@ -82,6 +88,21 @@ class ViewController: UIViewController {
 
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+
+        return layoutSection
+    }
+
+    private func createListSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2))
+
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 0)
+
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .estimated(200))
+
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 
         return layoutSection
     }
