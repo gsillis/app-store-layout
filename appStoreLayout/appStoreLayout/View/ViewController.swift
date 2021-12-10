@@ -23,12 +23,40 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setup()
         registerCell()
+        createHeader()
         reloadSnapshotData()
     }
 
     // MARK: Register Cell
     private func registerCell() {
         collectionView.register(FeatureCollectionViewCell.self, forCellWithReuseIdentifier: FeatureCollectionViewCell.identifier)
+        collectionView.register(ListTableCell.self, forCellWithReuseIdentifier: ListTableCell.identifier)
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
+        }
+
+    private func createHeader() {
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexpath in
+            guard let self = self else { return  nil}
+
+            switch self.section[indexpath.section].type {
+                case "listTable":
+                    guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexpath) as? SectionHeader else {
+                        return nil
+                    }
+
+                    guard let app = self.dataSource.itemIdentifier(for: indexpath) else { return nil }
+
+                    guard let section = self.dataSource.snapshot().sectionIdentifier(containingItem: app) else { return nil }
+
+                    guard !section.title.isEmpty else { return nil }
+                    sectionHeader.taglineLabel.text = section.title
+                    sectionHeader.subTitleLabel.text = section.subtitle
+
+                    return sectionHeader
+                default:
+                    return nil
+            }
+        }
     }
 
     // MARK: DiffableDataSourceSnapshot
@@ -47,6 +75,8 @@ class ViewController: UIViewController {
     private func createDataSource() -> UserDataSource {
         UserDataSource(collectionView: collectionView) { collectionView, indexPath, app in
             switch self.section[indexPath.section].type {
+                case "listTable":
+                    return collectionView.configure(ListTableCell.self, with: app, for: indexPath)
                 default:
                     return collectionView.configure(FeatureCollectionViewCell.self, with: app, for: indexPath)
             }
@@ -59,6 +89,8 @@ class ViewController: UIViewController {
             let section = self.section[sectionIndex]
 
             switch section.type {
+                case "listTable":
+                    return self.createListSection()
                 default:
                     return self.createFeatureSection()
             }
@@ -84,6 +116,31 @@ class ViewController: UIViewController {
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
 
         return layoutSection
+    }
+
+    private func createListSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2))
+
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 0)
+
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .estimated(200))
+
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        let header = createSectionHeader()
+        layoutSection.boundarySupplementaryItems = [header]
+
+        return layoutSection
+    }
+
+    // MARK: Layout Section Header
+    private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .estimated(80))
+
+        let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        return layoutSectionHeader
     }
 }
 
