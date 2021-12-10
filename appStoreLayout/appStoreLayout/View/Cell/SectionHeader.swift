@@ -67,7 +67,7 @@ extension SectionHeader: ViewCode {
 
     func addConstraints() {
         separatorView.constrainHeight(1)
-        stackView.fillSuperview(padding: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        stackView.fillSuperview(padding: UIEdgeInsets(top: 0, left: 5, bottom: 10, right: 0))
         stackView.setCustomSpacing(10, after: separatorView)
     }
 }

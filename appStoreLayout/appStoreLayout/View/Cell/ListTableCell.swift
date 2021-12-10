@@ -56,7 +56,8 @@ extension ListTableCell: ViewCode {
     }
 
     func addConstraints() {
-        stackView.fillSuperview()
+        stackView.fillSuperview(padding: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0))
+
         imageView.constrainSize(CGSize(width: 30, height: 30))
     }
 }

@@ -32,14 +32,16 @@ class ViewController: UIViewController {
         collectionView.register(FeatureCollectionViewCell.self, forCellWithReuseIdentifier: FeatureCollectionViewCell.identifier)
         collectionView.register(ListTableCell.self, forCellWithReuseIdentifier: ListTableCell.identifier)
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
+        collectionView.register(DownloadTableCell.self, forCellWithReuseIdentifier: DownloadTableCell.identifier)
         }
 
+    // MARK: Header
     private func createHeader() {
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexpath in
             guard let self = self else { return  nil}
 
             switch self.section[indexpath.section].type {
-                case "listTable":
+                case "listTable", "downloadTable":
                     guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexpath) as? SectionHeader else {
                         return nil
                     }
@@ -77,6 +79,8 @@ class ViewController: UIViewController {
             switch self.section[indexPath.section].type {
                 case "listTable":
                     return collectionView.configure(ListTableCell.self, with: app, for: indexPath)
+                case "downloadTable":
+                    return collectionView.configure(DownloadTableCell.self, with: app, for: indexPath)
                 default:
                     return collectionView.configure(FeatureCollectionViewCell.self, with: app, for: indexPath)
             }
@@ -91,6 +95,8 @@ class ViewController: UIViewController {
             switch section.type {
                 case "listTable":
                     return self.createListSection()
+                case "downloadTable":
+                    return self.createDownloadSection()
                 default:
                     return self.createFeatureSection()
             }
@@ -129,6 +135,24 @@ class ViewController: UIViewController {
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
 
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        let header = createSectionHeader()
+        layoutSection.boundarySupplementaryItems = [header]
+
+        return layoutSection
+    }
+
+    private func createDownloadSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.3))
+
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .fractionalWidth(0.5))
+
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
         let header = createSectionHeader()
         layoutSection.boundarySupplementaryItems = [header]
 
